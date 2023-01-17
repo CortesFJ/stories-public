@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/output.css" %}">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+</head>
+
+<body class=" bg-neutral-800">
+
+    <div class="absolute z-50">
+        <a href={% url 'home'%}>
+            <h1 class=" m-16 text-neutral-400 hover:text-white w-fit">
+                Stories
+            </h1>
+        </a>
+        <div class="flex w-screen  mx-auto pt-28 justify-center items-center">
+            <div class="rounded p-10 bg-neutral-300 text-neutral-800 shadow-inner">
+                {% block content  %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+
+</html>

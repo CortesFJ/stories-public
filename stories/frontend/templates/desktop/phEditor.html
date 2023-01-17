@@ -1,0 +1,6 @@
+{% extends 'main/main.html' %}
+{% block content %}
+{{phData|json_script:'phData'}}
+  <div name='phEditor' id="react-root"></div>
+  {% csrf_token %}
+{% endblock %}

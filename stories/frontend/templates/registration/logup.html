@@ -1,0 +1,46 @@
+{% extends 'registration/main.html' %}
+{% block title %}Register{%endblock title %}
+{% block content %}
+<form method="post" action="">
+    {% csrf_token %}
+    <table>
+        {% if errorMessage %}
+        <div>
+            {{errorMessage}}
+        </div>
+        <div>
+            {{form.errors}}
+        </div>
+        {% endif %}
+        <tr>
+            <td class="text-lg"><label for="code">Codigo de invitación:</label></td>
+            <td class="pl-3"><input id='code' name="code" type="text"></td>
+        </tr>
+        <tr>
+            <td class="text-lg">{{ form.username.label_tag }}</td>
+            <td class="pl-3">{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td class="text-lg">{{ form.email.label_tag }}</td>
+            <td class="pl-3">{{ form.email }}</td>
+        </tr>
+        <tr>
+            <td class="text-lg">{{ form.password1.label_tag }}</td>
+            <td class="pl-3">{{ form.password1 }}</td>
+        </tr>
+        <tr>
+            <td class="text-lg">{{ form.password2.label_tag }}</td>
+            <td class="pl-3">{{ form.password2 }}</td>
+        </tr>
+        <tr>
+            <td class="text-lg"> {{form.role.label_tag}} </td>
+            <td class="pl-3">{{ form.role }}</td>
+        </tr>
+    </table>
+    <div class="grid mt-4">
+        <input type="submit"
+            class="py-2 px-6 bg-neutral-900 text-neutral-100 rounded-lg hover:bg-black"
+            value="Registrarse">
+    </div>
+</form>
+{% endblock %}

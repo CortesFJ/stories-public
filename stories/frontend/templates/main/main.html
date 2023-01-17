@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="shortcut icon" href={% static "images/favicon.ico" %} type="image/x-icon">
+  <link rel="icon" href={% static "images/favicon.ico" %} type="image/x-icon">
+
+  <link rel="stylesheet" href="{% static "css/output.css" %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Rubik+Spray+Paint&family=Wallpoet&display=swap"
+    rel="stylesheet">
+
+  <title>Stories</title>
+</head>
+
+<body class="neucha-font text-neutral-700
+  {%if 'stories' in request.path or 'metadataUpdater' in request.path %} bg-amber-100
+  {% elif request.path == '/desk/' %} bg-neutral-200
+  {%endif%}">
+  <div class=" {%if request.path != '/blog/'%} h-[calc(100vh-2rem)] {%endif%} relative">
+    {% include 'main/header.html' %}
+    <main class=" {%if request.path == '/' %} px-32 {%else%} px-12 {%endif%}">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  {% include 'main/footer.html' %}
+
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="{% static 'reactBundle/bundle.js' %}"></script>
+</body>
+
+</html>

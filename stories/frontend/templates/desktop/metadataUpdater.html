@@ -1,0 +1,5 @@
+{% extends 'main/main.html' %} {% load static %} {% block content %}
+{{textData|json_script:'textData'}}
+<div name='metadataUpdater' id="react-root" name="words-disambiguation" class="contents"></div>
+{% csrf_token %}
+{% endblock %}

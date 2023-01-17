@@ -1,0 +1,10 @@
+<!-- @format -->
+
+{% extends 'main/main.html' %}
+{% load static %}
+{% block content %}
+{{ texts|json_script:'texts' }}
+{{levelsLexicon|json_script:'levelsLexicon'}}
+<div name='desk' id="react-root" class="h-full"></div>
+{% csrf_token %}
+{% endblock %}

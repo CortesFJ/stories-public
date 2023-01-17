@@ -1,0 +1,15 @@
+*.pyc
+db.sqlite3
+__pycache__/
+**.vscode/
+
+**node_modules/
+
+/venv/
+
+# **manage.py
+.ipynbj
+.ipynb_checkpoints
+
+hv.html
+# /frontend/

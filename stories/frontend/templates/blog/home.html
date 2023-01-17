@@ -1,0 +1,47 @@
+{% extends 'main/main.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="pt-20">BLOG HOME</h1>
+<br>
+<div class="text-lg font-bold">
+    <div
+        class="w-fit max-w-xl">
+        <p>
+            "{% lorem 20 w %}"
+        </p>
+        <p class="text-right pr-10 text-neutral-500">Somebody</p>
+    </div>
+</div>
+<br>
+<article class="text-justify">
+    <div class="pl-12">
+        <h2 class="my-6">Title</h2>
+        <div class="grid grid-cols-5">
+            <section class="col-span-3">{% lorem 2 b %}</section>
+            <div class="grid justify-center items-center">
+                <img src="{%get_static_prefix%}images/blog/some_ilustration.html" alt="some image">
+            </div>
+        </div>
+    </div>
+    <div class="pl-12">
+        <h2 class="my-6">Title</h2>
+        <div class="grid grid-cols-5">
+            <section class="col-span-3 ">{% lorem 3 b %}</section>
+            <div class="grid justify-center items-center">
+                <img src="{%get_static_prefix%}images/blog/some_ilustration.html" alt="some image">
+            </div>
+        </div>
+    </div>
+    <div class="pl-12">
+        <h2 class="my-6">Title</h2>
+        <div class="grid grid-cols-5">
+            <section class="col-span-3 ">{% lorem 5 b %}</section>
+            <div class="grid justify-center items-center">
+                <img src="{%get_static_prefix%}images/blog/some_ilustration.html" alt="some image">
+            </div>
+        </div>
+    </div>
+</article>
+</div>
+{% endblock %}

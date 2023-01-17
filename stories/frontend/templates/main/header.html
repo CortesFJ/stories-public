@@ -1,0 +1,156 @@
+<div x-data="{ visible: true, customPaddin: false }"
+  class="{%if request.path == '/blog/'%} sticky -top-24 {%endif%} relative">
+  <div :class="customPaddin && 'h-16'"></div>
+  <header
+    x-show="visible"
+    x-transition.duration.400ms
+    class="flex  items-center justify-between pr-40 text-xl font-bold
+    {%if request.path == '/' %} h-44 pl-32 pr-52  
+    {% elif request.path == '/blog/' %} h-28 bg-neutral-800 text-neutral-200 px-12 
+    {%else%} h-32 pl-12 {%endif%} 
+">
+    <div class="text-teal-800">
+      {% if 'stories' in request.path %}
+      <p class='text-4xl capitalize pl-12'>
+        {{bookInfo.title}}
+      </p>
+      {% elif request.path == '/desk/' %}
+      <p class='text-4xl'>
+        Imagine
+      </p>
+      {% elif request.path == '/blog/' %}
+      <p class='text-4xl text-teal-600'>
+        Learn
+      </p>
+      {% elif 'metadataUpdater' in request.path %}
+      <p class='text-4xl pl-16'>
+        Teach
+      </p>
+      {% else%}
+      <div class="pit-20 text-5xl">
+        <p class="-mb-4 rubik-font font-light">
+          STORIES
+        </p>
+        <span class="pl-2 text-2xl text-neutral-500">
+          Imagine, Learn
+        </span>
+      </div>
+      {% endif %}
+    </div>
+
+    <nav class="flex gap-6">
+      <a href={% url 'home' %}
+        class="hover:text-neutral-400
+        {% if request.path == '/' %} text-neutral-400 underline {% endif %} ">
+        Home
+      </a>
+
+      <a href={% url 'blog' %}
+        class="hover:text-neutral-400
+        {% if request.path == '/blog/' %} text-neutral-400 underline {% endif %} ">
+        Blog
+      </a>
+
+      {% if user.role == 3 %}
+      <a href={% url 'desk' %}
+        class="hover:text-neutral-400
+        {% if request.path == '/desk/' %} text-neutral-400 underline {% endif %} ">
+        Write
+      </a>
+      {% endif %}
+
+      <div x-data="{open:false}" class="relative ml-3 pt-1">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 hover:opacity-60"
+            x-show="!open"
+            @click="open = !open">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0l-3.75-3.75M17.25 21L21 17.25" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 hover:opacity-60"
+            x-show="open"
+            @click="open = !open">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+          </svg>
+        </div>
+
+
+        <div x-show="open" x-transition
+          class="absolute z-10 border text-lg py-1 grid gap-2 px-4 border-neutral-300 rounded shadow-lg
+          {%if request.path == '/blog/'%} text-neutral-700 bg-white 
+          {%elif 'stories' in request.path %} bg-amber-100 
+          {%else%} bg-white {%endif%}
+          ">
+          {% if user.is_authenticated %}
+          <div class="capitalize rounded-t border-b flex items-center gap-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6 pb-1">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>
+              {{ user.get_username }}
+            </span>
+          </div>
+          <div>
+            <a href={% url 'logout' %}
+              class=" hover:opacity-60 pr-4 flex items-center gap-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6 pb-1">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+              </svg>
+              <span> logout </span>
+            </a>
+          </div>
+          {% else %}
+          <a href={% url 'login' %}
+            class=" hover:opacity-60 pr-4 flex items-center gap-6 border-b">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6 pb-1">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+            </svg>
+            <span> login </span>
+          </a>
+          <a href={% url 'logup' %}
+            class=" hover:opacity-60 pr-4 flex items-center gap-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-6 h-6 pb-1">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+            </svg>
+
+            <span> register </span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+
+  </header>
+  {%if request.path != '/'%}
+
+  {%if request.path != '/blog/'%}
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+    @click=" () => {
+      visible = !visible
+      if (!customPaddin) {
+        setTimeout(() => { customPaddin = !customPaddin }, 400)
+      } else {
+        customPaddin = !customPaddin
+      }
+    }
+    "
+    :class="visible ? 'bottom-6' : 'bottom-2 rotate-180 opacity-40' "
+    class="absolute h-8 w-8 right-16 text-neutral-500 hover:text-neutral-800 transition duration-700">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+  </svg>
+  {%endif%}
+  {%endif%}
+</div>

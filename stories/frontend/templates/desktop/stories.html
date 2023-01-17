@@ -1,0 +1,6 @@
+{% extends 'main/main.html' %}
+{% block content %}
+{{ bookInfo|json_script:'bookInfo' }}
+{{ chapters|json_script:'chapters' }}
+<div name='stories' id="react-root" class="contents"></div>
+{% endblock %}

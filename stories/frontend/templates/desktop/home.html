@@ -1,0 +1,103 @@
+{% extends 'main/main.html' %}
+{% load static %}
+{% block content %}
+{{books|json_script:'books'}}
+
+<div x-data='data()' class="flex gap-6 text-xl">
+
+  <div class="cards grid grid-cols-3 gap-6 w-full">
+
+    <div class="col-span-2 cards grid grid-rows-4 gap-4">
+
+      {% for book in books reversed %}
+      <div
+        x-show="level == '{{book.level}}'"
+        class="relative shadow-md rounded-lg hover:opacity-60 ">
+        <a href={% url 'stories' pk=book.id %}>
+          <img
+            {% comment %} src="{%get_static_prefix%}images/{{book.title}}.jpg" {% endcomment %}
+            alt="Image for book: {{book.title}}"
+            class="h-full w-full object-cover rounded-lg" />
+          <div class="absolute bottom-0 w-full h-full
+            bg-neutral-900 rounded-lg opacity-40">
+          </div>
+          <p class="absolute bottom-0 w-full h-full
+          capitalize grid items-center text-center text-neutral-100 font-extrabold">
+            {{book.title}}
+          </p>
+        </a>
+      </div>
+      {% endfor %}
+
+      <template x-for="item in count_missing_books(level)">
+        <div
+          class="relative shadow-md rounded-lg hover:opacity-60">
+          <img
+            src="{%get_static_prefix%}images/default_book_image.jpg"
+            alt="Generic image for book"
+            class=" h-full w-full object-cover rounded-lg" />
+          <div class="absolute bottom-0 w-full h-full
+            bg-neutral-900 rounded-lg opacity-60">
+          </div>
+          <p class="absolute bottom-0 w-full h-full
+          capitalize grid items-center text-center text-neutral-100 font-extrabold">
+            Libro en construcción
+          </p>
+        </div>
+      </template>
+    </div>
+
+    <div
+      class="shadow-md p-4 bg-neutral-100 rounded border border-neutral-200 text-center
+      hover:shadow-xl hover:border-neutral-400">
+      <h3 x-text='"Title Notes for Level " + level' class="py-4"> Title</h3>
+      <img
+        :src="{%get_static_prefix%}+'images/level'+ level +'.jpg'"
+        alt="Level notes image">
+    </div>
+  </div>
+
+  <div name="leve-selector">
+    <ol class="grid pt-6 h-full text-neutral-600  wallpoet-font font-extrabold">
+      <template x-for='n in range' :key='n'>
+        <button
+          :value='n+1'
+          x-text='n+1'
+          @click='evt => level = evt.target.value'
+          class=" border-x-4 border-white"
+          :class="
+          level > n+1 ?  'bg-teal-800 text-neutral-100 hover:opacity-60' 
+          : (level == n+1) ? 'bg-emerald-700 text-neutral-100'
+          : 'hover:opacity-60'">
+        </button>
+      </template>
+      <span class="text-teal-800 neucha-font mt-1">Level</span>
+    </ol>
+  </div>
+
+</div>
+
+
+<script>
+  const data = () => {
+    const use_page_context = (page_context) => (
+      JSON.parse(
+        document.getElementById(page_context).textContent
+      )
+    )
+    return {
+      range: [...Array(5).keys()].reverse(),
+      level: 1,
+      books: [],
+      count_missing_books: (level) => {
+        missingBooks = 4 - (
+          use_page_context('books')
+          .filter(b => b.level == level).length
+        )
+        return [...Array(missingBooks).keys()]
+      }
+    }
+  }
+</script>
+
+{% endblock %}
